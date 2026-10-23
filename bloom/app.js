@@ -111,6 +111,15 @@ const App = (() => {
     });
   }
 
+  function devLogin() {
+    auth.signInAnonymously().then(() => {
+      console.log('Anonymous dev login success');
+    }).catch(err => {
+      console.error('Dev login failed:', err.code);
+      showAuthError('Dev login failed: ' + err.code + ' — ' + err.message);
+    });
+  }
+
   function signOutUser() {
     auth.signOut();
   }
@@ -130,8 +139,8 @@ const App = (() => {
       avatar.classList.remove('loaded');
       initial.textContent = (user.displayName || user.email || '?')[0].toUpperCase();
     }
-    dName.textContent = user.displayName || 'Gardener';
-    dEmail.textContent = user.email || '';
+    dName.textContent = user.displayName || (user.isAnonymous ? 'Dev Tester' : 'Gardener');
+    dEmail.textContent = user.email || (user.isAnonymous ? 'anonymous dev login' : '');
   }
 
   function showLogin() {
@@ -868,6 +877,7 @@ const App = (() => {
       setupAuth();
 
       document.getElementById('googleSignInBtn').addEventListener('click', signIn);
+      document.getElementById('devLoginBtn').addEventListener('click', devLogin);
       document.getElementById('signOutBtn').addEventListener('click', signOutUser);
 
       document.getElementById('profileBtn').addEventListener('click', () => {
