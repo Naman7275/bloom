@@ -32,6 +32,381 @@
     <div class="splash-sub">nurture your connections</div>
   </div>
 
+  <!-- ===== LANDING PAGE ===== -->
+  <div class="landing" id="landing">
+
+    <!-- FLOATING PETALS BACKGROUND -->
+    <canvas class="landing-petals" id="landingPetals"></canvas>
+
+    <!-- NAV BAR -->
+    <nav class="land-nav" id="landNav">
+      <div class="land-nav-inner">
+        <div class="land-logo">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" class="land-logo-icon">
+            <g transform="translate(20,34)">
+              <rect x="-5" y="-12" width="10" height="9" rx="2" fill="#D4C4A8"/>
+              <path d="M0 -12 Q-4 -20 -2 -26 Q0 -22 0 -22 Q0 -22 2 -26 Q4 -20 0 -12" fill="#7CB342"/>
+              <circle cx="-3" cy="-26" r="3" fill="#FFD93D"/>
+              <circle cx="3" cy="-26" r="3" fill="#FFD93D"/>
+              <circle cx="0" cy="-28" r="3" fill="#FFD93D"/>
+              <circle cx="0" cy="-26" r="2" fill="#8B6F47"/>
+            </g>
+          </svg>
+          <span class="land-logo-text">bloom</span>
+        </div>
+        <div class="land-nav-links">
+          <a href="#land-features" class="land-link">Features</a>
+          <a href="#land-how" class="land-link">How it works</a>
+          <a href="#land-types" class="land-link">Plants</a>
+        </div>
+        <button class="land-login-btn" id="landLoginBtn">Log In</button>
+      </div>
+    </nav>
+
+    <!-- SECTION 1: HERO -->
+    <section class="land-hero" id="land-hero">
+      <div class="hero-content">
+        <div class="hero-badge">A new way to nurture relationships</div>
+        <h1 class="hero-title">
+          Your relationships<br>deserve to <span class="hero-highlight">bloom</span>
+        </h1>
+        <p class="hero-sub">Turn every meaningful connection into a living plant. Water them with care, watch them grow, and build a garden that reflects the love in your life.</p>
+        <div class="hero-actions">
+          <button class="hero-cta" id="heroCtaBtn">Start Growing</button>
+          <a href="#land-how" class="hero-secondary">See how it works</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="stat-num" data-count="4">0</span>
+            <span class="stat-label">Plant types</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-num" data-count="5">0</span>
+            <span class="stat-label">Growth stages</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-num">&#x221E;</span>
+            <span class="stat-label">Connections</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-illustration">
+        <svg viewBox="0 0 460 420" xmlns="http://www.w3.org/2000/svg" class="hero-garden-svg">
+          <!-- Ground -->
+          <ellipse cx="230" cy="370" rx="200" ry="35" fill="#E8DFD0" opacity="0.5"/>
+          <!-- Pot 1 - Sunflower -->
+          <g class="hero-plant hero-plant-1" transform="translate(120,260)">
+            <rect x="-20" y="40" width="40" height="35" rx="5" fill="#D4C4A8"/>
+            <rect x="-22" y="35" width="44" height="8" rx="3" fill="#C4B498"/>
+            <path d="M0 35 Q-10 0 -6 -30 Q0 -20 0 -20 Q0 -20 6 -30 Q10 0 0 35" fill="#7CB342"/>
+            <g class="hero-flower-head">
+              <circle cx="-8" cy="-30" r="10" fill="#FFD93D"/>
+              <circle cx="8" cy="-30" r="10" fill="#FFD93D"/>
+              <circle cx="0" cy="-38" r="10" fill="#FFD93D"/>
+              <circle cx="-10" cy="-22" r="8" fill="#FFD93D"/>
+              <circle cx="10" cy="-22" r="8" fill="#FFD93D"/>
+              <circle cx="0" cy="-28" r="7" fill="#8B6F47"/>
+            </g>
+            <text x="0" y="95" text-anchor="middle" fill="#8B7355" font-family="Nunito" font-size="11" font-weight="600">Mom</text>
+          </g>
+          <!-- Pot 2 - Rose -->
+          <g class="hero-plant hero-plant-2" transform="translate(230,240)">
+            <rect x="-22" y="50" width="44" height="40" rx="6" fill="#D4C4A8"/>
+            <rect x="-24" y="44" width="48" height="10" rx="4" fill="#C4B498"/>
+            <path d="M0 44 Q-8 10 -5 -20 Q0 -10 0 -10 Q0 -10 5 -20 Q8 10 0 44" fill="#558B2F"/>
+            <path d="M-5 20 Q-18 15 -22 8 Q-15 14 -5 20" fill="#7CB342"/>
+            <path d="M5 10 Q18 5 22 -2 Q15 4 5 10" fill="#7CB342"/>
+            <g class="hero-flower-head">
+              <ellipse cx="0" cy="-25" rx="10" ry="12" fill="#E57373"/>
+              <ellipse cx="-6" cy="-22" rx="7" ry="10" fill="#EF5350" transform="rotate(-15 -6 -22)"/>
+              <ellipse cx="6" cy="-22" rx="7" ry="10" fill="#EF5350" transform="rotate(15 6 -22)"/>
+              <ellipse cx="0" cy="-20" rx="5" ry="6" fill="#C62828"/>
+            </g>
+            <text x="0" y="110" text-anchor="middle" fill="#8B7355" font-family="Nunito" font-size="11" font-weight="600">Partner</text>
+          </g>
+          <!-- Pot 3 - Fern -->
+          <g class="hero-plant hero-plant-3" transform="translate(340,270)">
+            <rect x="-18" y="35" width="36" height="30" rx="5" fill="#D4C4A8"/>
+            <rect x="-20" y="30" width="40" height="8" rx="3" fill="#C4B498"/>
+            <g class="hero-fern-fronds">
+              <path d="M0 30 Q-15 5 -25 -10" fill="none" stroke="#7CB342" stroke-width="3" stroke-linecap="round"/>
+              <path d="M0 30 Q15 5 25 -10" fill="none" stroke="#7CB342" stroke-width="3" stroke-linecap="round"/>
+              <path d="M0 30 Q-5 10 -8 -15" fill="none" stroke="#558B2F" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M0 30 Q5 10 8 -15" fill="none" stroke="#558B2F" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M0 30 Q0 15 0 -5" fill="none" stroke="#7CB342" stroke-width="2" stroke-linecap="round"/>
+              <!-- Tiny leaves -->
+              <circle cx="-18" cy="5" r="3" fill="#B8D4A0"/>
+              <circle cx="-25" cy="-8" r="2.5" fill="#B8D4A0"/>
+              <circle cx="18" cy="5" r="3" fill="#B8D4A0"/>
+              <circle cx="25" cy="-8" r="2.5" fill="#B8D4A0"/>
+              <circle cx="-8" cy="0" r="3" fill="#C8E6C9"/>
+              <circle cx="8" cy="0" r="3" fill="#C8E6C9"/>
+            </g>
+            <text x="0" y="85" text-anchor="middle" fill="#8B7355" font-family="Nunito" font-size="11" font-weight="600">Best friend</text>
+          </g>
+          <!-- Floating hearts -->
+          <g class="hero-hearts">
+            <text x="100" y="180" font-size="16" class="hero-float-1">💛</text>
+            <text x="260" y="160" font-size="14" class="hero-float-2">❤️</text>
+            <text x="370" y="200" font-size="12" class="hero-float-3">💚</text>
+            <text x="170" y="210" font-size="10" class="hero-float-4">✨</text>
+            <text x="320" y="175" font-size="10" class="hero-float-5">🌿</text>
+          </g>
+          <!-- Watering can -->
+          <g class="hero-watering-can" transform="translate(60,160)">
+            <rect x="0" y="0" width="30" height="20" rx="4" fill="#90CAF9"/>
+            <rect x="25" y="-5" width="4" height="15" rx="2" fill="#64B5F6" transform="rotate(25 27 2)"/>
+            <path d="M30 5 Q40 -5 45 -8" fill="none" stroke="#64B5F6" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="47" cy="-9" r="2" fill="#64B5F6"/>
+            <!-- Water drops -->
+            <circle cx="44" cy="0" r="1.5" fill="#90CAF9" class="hero-drop-1"/>
+            <circle cx="48" cy="2" r="1.5" fill="#90CAF9" class="hero-drop-2"/>
+            <circle cx="46" cy="5" r="1.5" fill="#90CAF9" class="hero-drop-3"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- SECTION 2: FEATURES -->
+    <section class="land-section land-features" id="land-features">
+      <div class="land-section-inner">
+        <div class="section-badge">Why Bloom?</div>
+        <h2 class="land-h2">Your garden of <em>meaningful</em> connections</h2>
+        <p class="land-sub">Bloom turns the invisible work of maintaining relationships into something beautiful, tangible, and rewarding.</p>
+        <div class="features-grid">
+          <div class="feature-card reveal">
+            <div class="feature-icon-wrap">
+              <svg viewBox="0 0 48 48" class="feature-icon"><circle cx="24" cy="24" r="20" fill="#E8F5E9"/><text x="24" y="30" text-anchor="middle" font-size="20">🌱</text></svg>
+            </div>
+            <h3>Living visualizations</h3>
+            <p>Every relationship becomes a unique plant that grows and changes based on how you nurture it.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="feature-icon-wrap">
+              <svg viewBox="0 0 48 48" class="feature-icon"><circle cx="24" cy="24" r="20" fill="#FFF3E0"/><text x="24" y="30" text-anchor="middle" font-size="20">💧</text></svg>
+            </div>
+            <h3>Gentle reminders</h3>
+            <p>Set your own cadence for each connection. Bloom nudges you when a plant needs watering.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="feature-icon-wrap">
+              <svg viewBox="0 0 48 48" class="feature-icon"><circle cx="24" cy="24" r="20" fill="#F3E5F5"/><text x="24" y="30" text-anchor="middle" font-size="20">📊</text></svg>
+            </div>
+            <h3>Health at a glance</h3>
+            <p>Your garden's mood tells you instantly which relationships are thriving and which need attention.</p>
+          </div>
+          <div class="feature-card reveal">
+            <div class="feature-icon-wrap">
+              <svg viewBox="0 0 48 48" class="feature-icon"><circle cx="24" cy="24" r="20" fill="#E3F2FD"/><text x="24" y="30" text-anchor="middle" font-size="20">☁️</text></svg>
+            </div>
+            <h3>Synced everywhere</h3>
+            <p>Your garden lives in the cloud. Water from your phone, check health from your laptop.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: HOW IT WORKS -->
+    <section class="land-section land-how" id="land-how">
+      <div class="land-section-inner">
+        <div class="section-badge">Simple as sunshine</div>
+        <h2 class="land-h2">Three steps to a<br>thriving garden</h2>
+        <div class="how-steps">
+          <div class="how-step reveal">
+            <div class="how-step-num">1</div>
+            <div class="how-step-visual">
+              <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" class="how-svg">
+                <circle cx="80" cy="80" r="70" fill="#F1F8E9" opacity="0.6"/>
+                <rect x="55" y="85" width="50" height="40" rx="6" fill="#D4C4A8"/>
+                <rect x="52" y="80" width="56" height="10" rx="4" fill="#C4B498"/>
+                <ellipse cx="80" cy="90" rx="22" ry="4" fill="#8B6F47"/>
+                <g class="how-seed-bounce">
+                  <ellipse cx="80" cy="82" rx="8" ry="6" fill="#A68B5B"/>
+                  <circle cx="76" cy="80" r="1.5" fill="#3D3229"/>
+                  <circle cx="84" cy="80" r="1.5" fill="#3D3229"/>
+                  <path d="M77 84 Q80 87 83 84" fill="none" stroke="#3D3229" stroke-width="1.2" stroke-linecap="round"/>
+                </g>
+              </svg>
+            </div>
+            <h3>Plant a seed</h3>
+            <p>Add someone you care about — a friend, partner, family member, or colleague. Choose their plant type.</p>
+          </div>
+          <div class="how-connector reveal">
+            <svg viewBox="0 0 60 20"><path d="M0 10 Q30 0 60 10" fill="none" stroke="#B8D4A0" stroke-width="2" stroke-dasharray="4 4"/></svg>
+          </div>
+          <div class="how-step reveal">
+            <div class="how-step-num">2</div>
+            <div class="how-step-visual">
+              <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" class="how-svg">
+                <circle cx="80" cy="80" r="70" fill="#E3F2FD" opacity="0.6"/>
+                <g class="how-water-anim">
+                  <rect x="50" y="45" width="40" height="28" rx="5" fill="#90CAF9"/>
+                  <path d="M85 52 Q100 40 108 35" fill="none" stroke="#64B5F6" stroke-width="3.5" stroke-linecap="round"/>
+                  <circle cx="110" cy="34" r="3" fill="#64B5F6"/>
+                  <circle cx="105" cy="50" r="2.5" fill="#BBDEFB" class="how-drop how-drop-1"/>
+                  <circle cx="110" cy="55" r="2" fill="#BBDEFB" class="how-drop how-drop-2"/>
+                  <circle cx="108" cy="62" r="2.5" fill="#BBDEFB" class="how-drop how-drop-3"/>
+                </g>
+                <rect x="60" y="95" width="40" height="30" rx="5" fill="#D4C4A8"/>
+                <path d="M80 95 Q74 70 80 55 Q86 70 80 95" fill="#7CB342"/>
+              </svg>
+            </div>
+            <h3>Water regularly</h3>
+            <p>Log a call, a hangout, a quick text — any moment of connection waters your plant and keeps it growing.</p>
+          </div>
+          <div class="how-connector reveal">
+            <svg viewBox="0 0 60 20"><path d="M0 10 Q30 20 60 10" fill="none" stroke="#B8D4A0" stroke-width="2" stroke-dasharray="4 4"/></svg>
+          </div>
+          <div class="how-step reveal">
+            <div class="how-step-num">3</div>
+            <div class="how-step-visual">
+              <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" class="how-svg">
+                <circle cx="80" cy="80" r="70" fill="#FFF8E1" opacity="0.6"/>
+                <rect x="55" y="90" width="50" height="35" rx="6" fill="#D4C4A8"/>
+                <path d="M80 90 Q68 50 72 25 Q80 40 80 40 Q80 40 88 25 Q92 50 80 90" fill="#558B2F"/>
+                <circle cx="72" cy="25" r="12" fill="#FFD93D"/>
+                <circle cx="88" cy="25" r="12" fill="#FFD93D"/>
+                <circle cx="80" cy="18" r="12" fill="#FFD93D"/>
+                <circle cx="68" cy="35" r="10" fill="#FFD93D"/>
+                <circle cx="92" cy="35" r="10" fill="#FFD93D"/>
+                <circle cx="80" cy="28" r="8" fill="#8B6F47"/>
+                <text x="80" y="40" text-anchor="middle" font-size="8" fill="white" font-weight="bold">:)</text>
+                <text x="55" y="15" font-size="12" class="how-sparkle-1">✨</text>
+                <text x="105" y="20" font-size="10" class="how-sparkle-2">✨</text>
+                <text x="45" y="45" font-size="8" class="how-sparkle-3">🌟</text>
+              </svg>
+            </div>
+            <h3>Watch it bloom</h3>
+            <p>See your garden flourish as connections deepen. A blooming garden means a rich, connected life.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: PLANT TYPES -->
+    <section class="land-section land-types" id="land-types">
+      <div class="land-section-inner">
+        <div class="section-badge">Your garden's cast</div>
+        <h2 class="land-h2">Every relationship has<br>its own <em>character</em></h2>
+        <div class="types-showcase">
+          <div class="type-card reveal" style="--accent:#FFD93D;--accent-bg:#FFF8E1">
+            <div class="type-plant-wrap">
+              <svg viewBox="0 0 120 140" class="type-plant-svg">
+                <rect x="40" y="90" width="40" height="35" rx="5" fill="#D4C4A8"/>
+                <rect x="38" y="85" width="44" height="8" rx="3" fill="#C4B498"/>
+                <path d="M60 85 Q52 50 56 25 Q60 38 60 38 Q60 38 64 25 Q68 50 60 85" fill="#7CB342"/>
+                <circle cx="52" cy="25" r="10" fill="#FFD93D"/>
+                <circle cx="68" cy="25" r="10" fill="#FFD93D"/>
+                <circle cx="60" cy="18" r="10" fill="#FFD93D"/>
+                <circle cx="60" cy="25" r="6" fill="#8B6F47"/>
+              </svg>
+            </div>
+            <div class="type-info">
+              <span class="type-emoji">🌻</span>
+              <h3>Sunflower</h3>
+              <p>Warm, steadfast, always turning toward the light. For family bonds.</p>
+            </div>
+          </div>
+          <div class="type-card reveal" style="--accent:#E57373;--accent-bg:#FFEBEE">
+            <div class="type-plant-wrap">
+              <svg viewBox="0 0 120 140" class="type-plant-svg">
+                <rect x="40" y="95" width="40" height="35" rx="5" fill="#D4C4A8"/>
+                <rect x="38" y="90" width="44" height="8" rx="3" fill="#C4B498"/>
+                <path d="M60 90 Q54 55 57 30 Q60 42 60 42 Q60 42 63 30 Q66 55 60 90" fill="#558B2F"/>
+                <path d="M55 65 Q40 60 35 52 Q44 58 55 65" fill="#7CB342"/>
+                <path d="M65 50 Q80 45 85 38 Q76 44 65 50" fill="#7CB342"/>
+                <ellipse cx="60" cy="25" rx="10" ry="14" fill="#E57373"/>
+                <ellipse cx="54" cy="28" rx="7" ry="11" fill="#EF5350" transform="rotate(-12 54 28)"/>
+                <ellipse cx="66" cy="28" rx="7" ry="11" fill="#EF5350" transform="rotate(12 66 28)"/>
+                <ellipse cx="60" cy="30" rx="4" ry="5" fill="#C62828"/>
+              </svg>
+            </div>
+            <div class="type-info">
+              <span class="type-emoji">🌹</span>
+              <h3>Rose</h3>
+              <p>Deep, passionate, beautifully complex. For your partner or closest love.</p>
+            </div>
+          </div>
+          <div class="type-card reveal" style="--accent:#81C784;--accent-bg:#E8F5E9">
+            <div class="type-plant-wrap">
+              <svg viewBox="0 0 120 140" class="type-plant-svg">
+                <rect x="40" y="90" width="40" height="30" rx="5" fill="#D4C4A8"/>
+                <rect x="38" y="85" width="44" height="8" rx="3" fill="#C4B498"/>
+                <path d="M60 85 Q45 55 35 40" fill="none" stroke="#7CB342" stroke-width="3" stroke-linecap="round"/>
+                <path d="M60 85 Q75 55 85 40" fill="none" stroke="#7CB342" stroke-width="3" stroke-linecap="round"/>
+                <path d="M60 85 Q55 60 52 35" fill="none" stroke="#558B2F" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M60 85 Q65 60 68 35" fill="none" stroke="#558B2F" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M60 85 Q60 65 60 40" fill="none" stroke="#7CB342" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="35" cy="42" r="5" fill="#B8D4A0"/>
+                <circle cx="85" cy="42" r="5" fill="#B8D4A0"/>
+                <circle cx="52" cy="38" r="4" fill="#C8E6C9"/>
+                <circle cx="68" cy="38" r="4" fill="#C8E6C9"/>
+                <circle cx="60" cy="42" r="3.5" fill="#A5D6A7"/>
+              </svg>
+            </div>
+            <div class="type-info">
+              <span class="type-emoji">🌿</span>
+              <h3>Fern</h3>
+              <p>Resilient, easy-going, always there. For friendships that stand the test of time.</p>
+            </div>
+          </div>
+          <div class="type-card reveal" style="--accent:#A5D6A7;--accent-bg:#F1F8E9">
+            <div class="type-plant-wrap">
+              <svg viewBox="0 0 120 140" class="type-plant-svg">
+                <rect x="40" y="85" width="40" height="35" rx="5" fill="#D4C4A8"/>
+                <rect x="38" y="80" width="44" height="8" rx="3" fill="#C4B498"/>
+                <ellipse cx="60" cy="55" rx="18" ry="28" fill="#558B2F"/>
+                <ellipse cx="60" cy="55" rx="14" ry="24" fill="#689F38"/>
+                <line x1="52" y1="42" x2="55" y2="48" stroke="#8B6F47" stroke-width="1"/>
+                <line x1="68" y1="42" x2="65" y2="48" stroke="#8B6F47" stroke-width="1"/>
+                <line x1="50" y1="55" x2="56" y2="55" stroke="#8B6F47" stroke-width="1"/>
+                <line x1="64" y1="55" x2="70" y2="55" stroke="#8B6F47" stroke-width="1"/>
+                <line x1="52" y1="65" x2="56" y2="62" stroke="#8B6F47" stroke-width="1"/>
+                <line x1="68" y1="65" x2="64" y2="62" stroke="#8B6F47" stroke-width="1"/>
+              </svg>
+            </div>
+            <div class="type-info">
+              <span class="type-emoji">🌵</span>
+              <h3>Cactus</h3>
+              <p>Tough, low-maintenance, quietly enduring. For colleagues and wider connections.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: CTA -->
+    <section class="land-section land-cta" id="land-cta">
+      <div class="land-cta-inner">
+        <div class="cta-glow"></div>
+        <svg viewBox="0 0 200 120" class="cta-mini-garden" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="100" cy="105" rx="90" ry="12" fill="#E8DFD0" opacity="0.4"/>
+          <g transform="translate(50,60)"><rect x="-10" y="15" width="20" height="18" rx="3" fill="#D4C4A8"/><path d="M0 15 Q-5 0 -3 -12 Q0 -6 0 -6 Q0 -6 3 -12 Q5 0 0 15" fill="#7CB342"/><circle cx="-3" cy="-12" r="5" fill="#FFD93D"/><circle cx="3" cy="-12" r="5" fill="#FFD93D"/><circle cx="0" cy="-16" r="5" fill="#FFD93D"/><circle cx="0" cy="-12" r="3" fill="#8B6F47"/></g>
+          <g transform="translate(100,50)"><rect x="-12" y="20" width="24" height="20" rx="3" fill="#D4C4A8"/><path d="M0 20 Q-6 0 -3 -15 Q0 -6 0 -6 Q0 -6 3 -15 Q6 0 0 20" fill="#558B2F"/><ellipse cx="0" cy="-18" rx="8" ry="10" fill="#E57373"/><ellipse cx="0" cy="-16" rx="4" ry="5" fill="#C62828"/></g>
+          <g transform="translate(150,65)"><rect x="-8" y="12" width="16" height="14" rx="2" fill="#D4C4A8"/><path d="M0 12 Q-8 0 -12 -8" fill="none" stroke="#7CB342" stroke-width="2" stroke-linecap="round"/><path d="M0 12 Q8 0 12 -8" fill="none" stroke="#7CB342" stroke-width="2" stroke-linecap="round"/><circle cx="-12" cy="-7" r="3" fill="#B8D4A0"/><circle cx="12" cy="-7" r="3" fill="#B8D4A0"/></g>
+        </svg>
+        <h2 class="cta-title">Ready to grow your garden?</h2>
+        <p class="cta-sub">Free forever. No ads. No data selling. Just you and the people who matter.</p>
+        <button class="cta-btn" id="ctaSignUpBtn">Create your garden</button>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="land-footer">
+      <div class="land-footer-inner">
+        <div class="footer-logo">
+          <svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+            <g transform="translate(15,26)"><rect x="-4" y="-9" width="8" height="7" rx="1.5" fill="#D4C4A8"/><path d="M0 -9 Q-3 -16 -1.5 -20 Q0 -17 0 -17 Q0 -17 1.5 -20 Q3 -16 0 -9" fill="#7CB342"/><circle cx="0" cy="-20" r="2.5" fill="#FFD93D"/><circle cx="0" cy="-20" r="1.5" fill="#8B6F47"/></g>
+          </svg>
+          <span>bloom</span>
+        </div>
+        <p class="footer-text">Made with care by nanosphere</p>
+      </div>
+    </footer>
+  </div>
+
   <!-- ONBOARDING -->
   <div class="onboarding hidden" id="onboarding">
     <button class="ob-skip" id="obSkip">Skip</button>

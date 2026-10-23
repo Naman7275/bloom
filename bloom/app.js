@@ -153,18 +153,16 @@ const App = (() => {
 
   function showLogin() {
     if (!document.getElementById('onboarding').classList.contains('hidden')) return;
-    document.getElementById('loginScreen').classList.remove('hidden');
-    document.getElementById('app').classList.add('app-hidden');
-    document.getElementById('skyGradient').style.display = 'none';
-    document.getElementById('particlesCanvas').style.display = 'none';
-    document.getElementById('profileDropdown').classList.add('hidden');
+    showLanding();
   }
 
   function showApp() {
+    hideLanding();
     document.getElementById('loginScreen').classList.add('hidden');
     document.getElementById('app').classList.remove('app-hidden');
     document.getElementById('skyGradient').style.display = '';
     document.getElementById('particlesCanvas').style.display = '';
+    document.getElementById('profileDropdown').classList.add('hidden');
     renderGarden();
   }
 
@@ -864,13 +862,128 @@ const App = (() => {
       if (currentUser) {
         showApp();
       } else {
-        showLogin();
+        showLanding();
       }
     } else {
       loadLocal();
       document.getElementById('app').classList.remove('app-hidden');
       renderGarden();
     }
+  }
+
+  // ===== LANDING PAGE =====
+  function showLanding() {
+    document.body.classList.add('landing-mode');
+    document.getElementById('landing').style.display = 'block';
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('app').classList.add('app-hidden');
+    initLanding();
+  }
+
+  function hideLanding() {
+    document.body.classList.remove('landing-mode');
+    document.getElementById('landing').style.display = 'none';
+  }
+
+  function openLoginFromLanding() {
+    document.getElementById('loginScreen').classList.remove('hidden');
+  }
+
+  function initLanding() {
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Nav scroll effect
+    const nav = document.getElementById('landNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('.land-link, .hero-secondary').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Counter animation
+    document.querySelectorAll('.stat-num[data-count]').forEach(el => {
+      const target = parseInt(el.dataset.count);
+      let current = 0;
+      const step = () => {
+        current++;
+        el.textContent = current;
+        if (current < target) requestAnimationFrame(step);
+      };
+      setTimeout(step, 800);
+    });
+
+    // Floating petals canvas
+    initLandingPetals();
+  }
+
+  function initLandingPetals() {
+    const canvas = document.getElementById('landingPetals');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let petals = [];
+    const colors = ['#B8D4A0', '#FFD93D', '#F2C6D8', '#A8D8EA', '#FFDAB9'];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    for (let i = 0; i < 20; i++) {
+      petals.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height * 3,
+        size: 3 + Math.random() * 5,
+        speedY: 0.3 + Math.random() * 0.6,
+        speedX: (Math.random() - 0.5) * 0.4,
+        rotation: Math.random() * 360,
+        rotSpeed: (Math.random() - 0.5) * 2,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        opacity: 0.15 + Math.random() * 0.25
+      });
+    }
+
+    function drawPetal(p) {
+      ctx.save();
+      ctx.translate(p.x, p.y - window.scrollY * 0.3);
+      ctx.rotate(p.rotation * Math.PI / 180);
+      ctx.globalAlpha = p.opacity;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, p.size, p.size * 0.6, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    let landingAnimId;
+    function animate() {
+      if (!document.body.classList.contains('landing-mode')) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      petals.forEach(p => {
+        p.y += p.speedY;
+        p.x += p.speedX + Math.sin(p.y * 0.01) * 0.3;
+        p.rotation += p.rotSpeed;
+        if (p.y - window.scrollY * 0.3 > canvas.height + 20) {
+          p.y = window.scrollY * 0.3 - 20;
+          p.x = Math.random() * canvas.width;
+        }
+        drawPetal(p);
+      });
+      landingAnimId = requestAnimationFrame(animate);
+    }
+    animate();
   }
 
   // ===== INIT =====
@@ -888,6 +1001,11 @@ const App = (() => {
       document.getElementById('loginPassword').addEventListener('keydown', e => { if (e.key === 'Enter') emailSignIn(); });
       document.getElementById('googleSignInBtn').addEventListener('click', signIn);
       document.getElementById('signOutBtn').addEventListener('click', signOutUser);
+
+      // Landing page buttons
+      document.getElementById('landLoginBtn').addEventListener('click', openLoginFromLanding);
+      document.getElementById('heroCtaBtn').addEventListener('click', openLoginFromLanding);
+      document.getElementById('ctaSignUpBtn').addEventListener('click', openLoginFromLanding);
 
       document.getElementById('profileBtn').addEventListener('click', () => {
         const dd = document.getElementById('profileDropdown');
