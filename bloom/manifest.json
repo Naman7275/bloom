@@ -2,7 +2,7 @@
   "name": "Bloom",
   "short_name": "Bloom",
   "description": "A Tamagotchi for your real relationships — your garden of living connections",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#FDF6EC",
   "theme_color": "#558B2F",
