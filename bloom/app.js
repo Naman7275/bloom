@@ -62,8 +62,26 @@ const App = (() => {
   }
 
   // ===== AUTH =====
+  function showAuthError(msg) {
+    let el = document.getElementById('authError');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'authError';
+      el.style.cssText = 'color:#c62828;background:#fce4ec;padding:12px 16px;margin:12px 24px;border-radius:12px;font-size:13px;text-align:center;word-break:break-word;';
+      const btn = document.querySelector('.btn-google');
+      if (btn) btn.parentNode.insertBefore(el, btn.nextSibling);
+    }
+    el.textContent = msg;
+    el.classList.remove('hidden');
+  }
+
   function setupAuth() {
-    auth.getRedirectResult().catch(() => {});
+    auth.getRedirectResult().then(result => {
+      if (result.user) console.log('Redirect sign-in success');
+    }).catch(err => {
+      console.error('Redirect error:', err.code, err.message);
+      if (err.code) showAuthError('Sign-in failed: ' + err.code + ' — ' + err.message);
+    });
     auth.onAuthStateChanged(user => {
       if (user) {
         currentUser = user;
@@ -81,7 +99,16 @@ const App = (() => {
 
   function signIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithRedirect(provider);
+    auth.signInWithPopup(provider).then(result => {
+      console.log('Popup sign-in success');
+    }).catch(err => {
+      console.warn('Popup failed:', err.code, '- trying redirect');
+      if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
+        auth.signInWithRedirect(provider);
+      } else {
+        showAuthError(err.code + ': ' + err.message);
+      }
+    });
   }
 
   function signOutUser() {
