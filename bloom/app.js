@@ -7,12 +7,12 @@ const App = (() => {
   // ===== FIREBASE CONFIG =====
   // Replace with your Firebase project config
   const FIREBASE_CONFIG = {
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: ""
+    apiKey: "AIzaSyBzf6_cEY2o1qoiyS2LNdRzC-ai5XOkg6Q",
+    authDomain: "bloom-d9be0.firebaseapp.com",
+    projectId: "bloom-d9be0",
+    storageBucket: "bloom-d9be0.firebasestorage.app",
+    messagingSenderId: "385882000253",
+    appId: "1:385882000253:web:e64fa93aceb89c75c31a14"
   };
 
   const STORAGE_KEY = 'bloom_garden';
