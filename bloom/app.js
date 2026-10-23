@@ -135,6 +135,7 @@ const App = (() => {
   }
 
   function showLogin() {
+    if (!document.getElementById('onboarding').classList.contains('hidden')) return;
     document.getElementById('loginScreen').classList.remove('hidden');
     document.getElementById('app').classList.add('app-hidden');
     document.getElementById('skyGradient').style.display = 'none';
@@ -843,7 +844,11 @@ const App = (() => {
 
   function proceedAfterOnboarding() {
     if (useCloud) {
-      document.getElementById('loginScreen').classList.remove('hidden');
+      if (currentUser) {
+        showApp();
+      } else {
+        showLogin();
+      }
     } else {
       loadLocal();
       document.getElementById('app').classList.remove('app-hidden');
