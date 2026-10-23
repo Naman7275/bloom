@@ -589,40 +589,248 @@ const App = (() => {
     return formatDate(iso);
   }
 
+  // ===== PARTICLES SYSTEM =====
+  function initParticles() {
+    const canvas = document.getElementById('particlesCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const colors = ['#B8D4A0', '#FFD93D', '#E8A0BF', '#87CEEB', '#C5A3CF'];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function createParticle() {
+      return {
+        x: Math.random() * canvas.width,
+        y: -10,
+        size: 2 + Math.random() * 4,
+        speedX: (Math.random() - 0.5) * 0.5,
+        speedY: 0.3 + Math.random() * 0.8,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        opacity: 0.3 + Math.random() * 0.4,
+        rotation: Math.random() * 360,
+        rotSpeed: (Math.random() - 0.5) * 2,
+        type: Math.random() > 0.7 ? 'leaf' : 'dot'
+      };
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (particles.length < 25 && Math.random() > 0.95) {
+        particles.push(createParticle());
+      }
+
+      particles.forEach((p, i) => {
+        p.x += p.speedX + Math.sin(p.y * 0.01) * 0.3;
+        p.y += p.speedY;
+        p.rotation += p.rotSpeed;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation * Math.PI / 180);
+        ctx.globalAlpha = p.opacity;
+
+        if (p.type === 'leaf') {
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.size * 1.5, p.size * 0.6, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.beginPath();
+          ctx.moveTo(-p.size, 0);
+          ctx.lineTo(p.size, 0);
+          ctx.strokeStyle = p.color;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        } else {
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(0, 0, p.size * 0.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.restore();
+
+        if (p.y > canvas.height + 20) particles.splice(i, 1);
+      });
+
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    draw();
+  }
+
+  // ===== DYNAMIC SKY =====
+  function updateSky() {
+    const sky = document.getElementById('skyGradient');
+    if (!sky) return;
+    const hour = new Date().getHours();
+    sky.className = 'sky-gradient';
+    if (hour >= 6 && hour < 10) sky.classList.add('sky-morning');
+    else if (hour >= 10 && hour < 17) sky.classList.add('sky-day');
+    else if (hour >= 17 && hour < 20) sky.classList.add('sky-evening');
+    else sky.classList.add('sky-night');
+  }
+
+  // ===== CONFETTI BURST =====
+  function showConfetti() {
+    const container = document.createElement('div');
+    container.className = 'confetti-container';
+    document.body.appendChild(container);
+
+    const colors = ['#FFD93D', '#E8A0BF', '#7CB342', '#5BA4CF', '#F4845F', '#C5A3CF'];
+
+    for (let i = 0; i < 40; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti';
+      piece.style.left = (30 + Math.random() * 40) + '%';
+      piece.style.top = (20 + Math.random() * 20) + '%';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.animationDelay = (Math.random() * 0.5) + 's';
+      piece.style.animationDuration = (1 + Math.random() * 1) + 's';
+      piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+      piece.style.width = (4 + Math.random() * 8) + 'px';
+      piece.style.height = (4 + Math.random() * 8) + 'px';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      container.appendChild(piece);
+    }
+
+    setTimeout(() => container.remove(), 2500);
+  }
+
+  // ===== FLOATING EMOJI =====
+  function floatEmoji(emoji, x, y) {
+    const el = document.createElement('div');
+    el.className = 'float-emoji';
+    el.textContent = emoji;
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1500);
+  }
+
+  // ===== RIPPLE EFFECT =====
+  function addRipple(e, element) {
+    const rect = element.getBoundingClientRect();
+    const ripple = document.createElement('div');
+    ripple.className = 'ripple';
+    ripple.style.left = (e.clientX - rect.left) + 'px';
+    ripple.style.top = (e.clientY - rect.top) + 'px';
+    element.style.position = 'relative';
+    element.style.overflow = 'hidden';
+    element.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  }
+
+  // ===== HAPTIC =====
+  function haptic(style) {
+    if (navigator.vibrate) {
+      if (style === 'light') navigator.vibrate(10);
+      else if (style === 'medium') navigator.vibrate(20);
+      else navigator.vibrate([15, 30, 15]);
+    }
+  }
+
+  // ===== SPLASH SCREEN =====
+  function dismissSplash() {
+    const splash = document.getElementById('splashScreen');
+    if (!splash) return;
+    setTimeout(() => {
+      splash.classList.add('fade-out');
+      setTimeout(() => splash.remove(), 600);
+    }, 1800);
+  }
+
+  // ===== ENHANCED WATER =====
+  const origDoWater = doWater;
+  function enhancedDoWater(type) {
+    if (!currentPlantId) return;
+    waterPlant(currentPlantId, type);
+    hideWaterSheet();
+    haptic('heavy');
+
+    playWaterAnimation();
+
+    setTimeout(() => {
+      showConfetti();
+      const plant = plants.find(p => p.id === currentPlantId);
+      if (plant) {
+        const emojis = { call: '📞', text: '💬', visit: '🤗', gift: '🎁', thought: '💭' };
+        for (let i = 0; i < 3; i++) {
+          setTimeout(() => {
+            floatEmoji(emojis[type] || '💧',
+              window.innerWidth / 2 - 20 + (Math.random() - 0.5) * 100,
+              window.innerHeight * 0.3 + Math.random() * 50);
+          }, i * 200);
+        }
+      }
+    }, 800);
+
+    setTimeout(() => {
+      const showcase = document.getElementById('plantShowcase');
+      if (showcase) showcase.classList.add('plant-bloom-burst');
+      showPlantDetail(currentPlantId);
+      setTimeout(() => {
+        if (showcase) showcase.classList.remove('plant-bloom-burst');
+      }, 800);
+    }, 1400);
+  }
+
   // ===== INIT =====
   function init() {
     load();
 
-    // Nav
+    dismissSplash();
+    updateSky();
+    initParticles();
+
     document.querySelectorAll('.nav-item').forEach(btn => {
-      btn.addEventListener('click', () => navigateTo(btn.dataset.screen));
+      btn.addEventListener('click', (e) => {
+        haptic('light');
+        navigateTo(btn.dataset.screen);
+      });
     });
 
-    // Back buttons
-    document.getElementById('plantBackBtn').addEventListener('click', () => navigateTo('gardenScreen'));
-    document.getElementById('addBackBtn').addEventListener('click', () => navigateTo('gardenScreen'));
+    document.getElementById('plantBackBtn').addEventListener('click', () => {
+      haptic('light');
+      navigateTo('gardenScreen');
+    });
+    document.getElementById('addBackBtn').addEventListener('click', () => {
+      haptic('light');
+      navigateTo('gardenScreen');
+    });
 
-    // Empty state add button
-    document.getElementById('emptyAddBtn').addEventListener('click', () => {
+    document.getElementById('emptyAddBtn').addEventListener('click', (e) => {
+      haptic('medium');
+      addRipple(e, e.currentTarget);
       resetAddForm();
       navigateTo('addScreen');
     });
 
-    // Add nav button
     document.getElementById('addNavBtn').addEventListener('click', () => resetAddForm());
 
-    // Water button
-    document.getElementById('waterBtn').addEventListener('click', showWaterSheet);
-
-    // Water sheet
-    document.getElementById('sheetBackdrop').addEventListener('click', hideWaterSheet);
-    document.querySelectorAll('.water-option').forEach(opt => {
-      opt.addEventListener('click', () => doWater(opt.dataset.type));
+    document.getElementById('waterBtn').addEventListener('click', (e) => {
+      haptic('medium');
+      showWaterSheet();
     });
 
-    // Chips
+    document.getElementById('sheetBackdrop').addEventListener('click', hideWaterSheet);
+    document.querySelectorAll('.water-option').forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        haptic('medium');
+        addRipple(e, e.currentTarget);
+        enhancedDoWater(opt.dataset.type);
+      });
+    });
+
     document.querySelectorAll('.chip').forEach(chip => {
-      chip.addEventListener('click', () => {
+      chip.addEventListener('click', (e) => {
+        haptic('light');
         document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
         chip.classList.add('selected');
         selectedRelation = chip.dataset.value;
@@ -631,23 +839,25 @@ const App = (() => {
       });
     });
 
-    // Cadence
     document.querySelectorAll('.cadence-opt').forEach(opt => {
       opt.addEventListener('click', () => {
+        haptic('light');
         document.querySelectorAll('.cadence-opt').forEach(o => o.classList.remove('selected'));
         opt.classList.add('selected');
         selectedCadence = Number(opt.dataset.days);
       });
     });
 
-    // Name input
     document.getElementById('personName').addEventListener('input', validateAddForm);
 
-    // Plant seed
-    document.getElementById('plantSeedBtn').addEventListener('click', doPlantSeed);
+    document.getElementById('plantSeedBtn').addEventListener('click', (e) => {
+      haptic('heavy');
+      addRipple(e, e.currentTarget);
+      doPlantSeed();
+    });
 
-    // Water reminder tap
     document.getElementById('waterReminder').addEventListener('click', () => {
+      haptic('medium');
       const thirsty = plants.find(p => getHealth(p) < 50);
       if (thirsty) showPlantDetail(thirsty.id);
     });

@@ -7,12 +7,37 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="theme-color" content="#FDF6EC">
   <title>Bloom</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- SPLASH SCREEN -->
+  <div class="splash-screen" id="splashScreen">
+    <svg class="splash-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(50, 80)">
+        <rect x="-14" y="-30" width="28" height="24" rx="4" fill="#D4C4A8"/>
+        <rect x="-16" y="-34" width="32" height="6" rx="2" fill="#C4B498"/>
+        <path d="M0 -34 Q-8 -52 -4 -62 Q0 -55 0 -55 Q0 -55 4 -62 Q8 -52 0 -34" fill="#7CB342"/>
+        <circle cx="-6" cy="-62" r="7" fill="#FFD93D"><animate attributeName="r" values="0;7" dur="0.6s" begin="0.3s" fill="freeze"/></circle>
+        <circle cx="6" cy="-62" r="7" fill="#FFD93D"><animate attributeName="r" values="0;7" dur="0.6s" begin="0.4s" fill="freeze"/></circle>
+        <circle cx="0" cy="-68" r="7" fill="#FFD93D"><animate attributeName="r" values="0;7" dur="0.6s" begin="0.5s" fill="freeze"/></circle>
+        <circle cx="0" cy="-62" r="5" fill="#8B6F47"><animate attributeName="r" values="0;5" dur="0.4s" begin="0.7s" fill="freeze"/></circle>
+      </g>
+    </svg>
+    <div class="splash-title">bloom</div>
+    <div class="splash-sub">nurture your connections</div>
+  </div>
+
+  <!-- SKY GRADIENT -->
+  <div class="sky-gradient" id="skyGradient"></div>
+
+  <!-- FLOATING PARTICLES -->
+  <canvas class="particles-canvas" id="particlesCanvas"></canvas>
+
   <div id="app">
     <!-- STATUS BAR SPACER -->
     <div class="status-bar-spacer"></div>
@@ -264,5 +289,6 @@
   </div>
 
   <script src="app.js"></script>
+  <script>if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');</script>
 </body>
 </html>
