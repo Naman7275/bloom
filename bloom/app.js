@@ -63,6 +63,7 @@ const App = (() => {
 
   // ===== AUTH =====
   function setupAuth() {
+    auth.getRedirectResult().catch(() => {});
     auth.onAuthStateChanged(user => {
       if (user) {
         currentUser = user;
@@ -80,11 +81,7 @@ const App = (() => {
 
   function signIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).catch(err => {
-      if (err.code === 'auth/popup-blocked' || err.code === 'auth/popup-closed-by-user') {
-        auth.signInWithRedirect(provider);
-      }
-    });
+    auth.signInWithRedirect(provider);
   }
 
   function signOutUser() {
