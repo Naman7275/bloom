@@ -111,12 +111,20 @@ const App = (() => {
     });
   }
 
-  function devLogin() {
-    auth.signInAnonymously().then(() => {
-      console.log('Anonymous dev login success');
+  function emailSignIn() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const pass = document.getElementById('loginPassword').value;
+    if (!email || !pass) { showAuthError('Please enter email and password'); return; }
+    auth.signInWithEmailAndPassword(email, pass).then(() => {
+      console.log('Email sign-in success');
     }).catch(err => {
-      console.error('Dev login failed:', err.code);
-      showAuthError('Dev login failed: ' + err.code + ' — ' + err.message);
+      if (err.code === 'auth/user-not-found') {
+        auth.createUserWithEmailAndPassword(email, pass).then(() => {
+          console.log('Account created & signed in');
+        }).catch(e => showAuthError(e.code + ': ' + e.message));
+      } else {
+        showAuthError(err.code + ': ' + err.message);
+      }
     });
   }
 
@@ -139,8 +147,8 @@ const App = (() => {
       avatar.classList.remove('loaded');
       initial.textContent = (user.displayName || user.email || '?')[0].toUpperCase();
     }
-    dName.textContent = user.displayName || (user.isAnonymous ? 'Dev Tester' : 'Gardener');
-    dEmail.textContent = user.email || (user.isAnonymous ? 'anonymous dev login' : '');
+    dName.textContent = user.displayName || 'Gardener';
+    dEmail.textContent = user.email || '';
   }
 
   function showLogin() {
@@ -876,8 +884,9 @@ const App = (() => {
     if (useCloud) {
       setupAuth();
 
+      document.getElementById('emailSignInBtn').addEventListener('click', emailSignIn);
+      document.getElementById('loginPassword').addEventListener('keydown', e => { if (e.key === 'Enter') emailSignIn(); });
       document.getElementById('googleSignInBtn').addEventListener('click', signIn);
-      document.getElementById('devLoginBtn').addEventListener('click', devLogin);
       document.getElementById('signOutBtn').addEventListener('click', signOutUser);
 
       document.getElementById('profileBtn').addEventListener('click', () => {
