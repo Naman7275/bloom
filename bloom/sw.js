@@ -1,4 +1,4 @@
-const CACHE = 'bloom-v2';
+const CACHE = 'bloom-v3';
 const ASSETS = ['./', './index.html', './style.css', './app.js', './manifest.json', './icon-192.svg', './icon-512.svg'];
 
 self.addEventListener('install', e => {
@@ -16,6 +16,10 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+  const url = new URL(e.request.url);
+  if (url.hostname === 'www.gstatic.com' || url.hostname.endsWith('.googleapis.com') || url.hostname.endsWith('.firebaseio.com')) {
+    return;
+  }
   e.respondWith(
     caches.match(e.request).then(r => r || fetch(e.request))
   );

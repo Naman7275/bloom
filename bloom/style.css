@@ -1184,3 +1184,205 @@ body {
 
 /* ===== SCROLLBAR ===== */
 .screen::-webkit-scrollbar { width: 0; }
+
+/* ===== LOGIN SCREEN ===== */
+.login-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #FDF6EC 0%, #E8DFD0 40%, #B8D4A0 100%);
+}
+
+.login-content {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  padding: 40px 24px;
+  text-align: center;
+  animation: splash-text 0.6s ease forwards;
+}
+
+.login-logo {
+  width: 90px;
+  height: 90px;
+  margin-bottom: 8px;
+}
+
+.login-title {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--green-deep);
+  margin-bottom: 4px;
+}
+
+.login-tagline {
+  font-size: 15px;
+  color: var(--soil);
+  margin-bottom: 32px;
+}
+
+.login-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 36px;
+  padding: 0 8px;
+}
+
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 24px;
+  background: white;
+  border: 1.5px solid #E0D8CC;
+  border-radius: 16px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.btn-google:hover {
+  background: #FAFAF8;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+  transform: translateY(-1px);
+}
+
+.btn-google:active {
+  transform: scale(0.97);
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.login-footer {
+  margin-top: 24px;
+  font-size: 12px;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* ===== PROFILE BUTTON & DROPDOWN ===== */
+.profile-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--green);
+  background: var(--cream-dark);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.profile-btn:active { transform: scale(0.9); }
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+.profile-avatar.loaded { display: block; }
+.profile-avatar.loaded + .profile-initial { display: none; }
+
+.profile-initial {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--green-deep);
+}
+
+.profile-dropdown {
+  position: fixed;
+  top: 60px;
+  right: 16px;
+  width: 260px;
+  background: var(--warm-white);
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  border: 1px solid var(--border);
+  z-index: 200;
+  overflow: hidden;
+  animation: pop-in 0.25s ease;
+}
+
+.profile-dropdown-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dropdown-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--cream-dark);
+}
+
+.dropdown-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.dropdown-name {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-email {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-signout {
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  background: none;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--coral);
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dropdown-signout:hover { background: rgba(244, 132, 95, 0.06); }
+
+/* Hide app when not signed in */
+.app-hidden { display: none !important; }
