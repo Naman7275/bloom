@@ -1,0 +1,4 @@
+nanoscope/
+.claude/
+node_modules/
+.DS_Store

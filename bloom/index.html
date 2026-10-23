@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#FDF6EC">
+  <title>Bloom</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- STATUS BAR SPACER -->
+    <div class="status-bar-spacer"></div>
+
+    <!-- ===== GARDEN SCREEN (HOME) ===== -->
+    <section class="screen active" id="gardenScreen">
+      <header class="garden-header">
+        <div class="header-left">
+          <h1 class="app-title">bloom</h1>
+          <p class="garden-subtitle">your garden</p>
+        </div>
+        <div class="header-right">
+          <button class="icon-btn" id="settingsBtn" aria-label="Settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Weather / Mood banner -->
+      <div class="garden-mood" id="gardenMood">
+        <span class="mood-icon">🌤</span>
+        <span class="mood-text">A gentle day in your garden</span>
+      </div>
+
+      <!-- Garden grid -->
+      <div class="garden-ground">
+        <div class="garden-grid" id="gardenGrid">
+          <!-- Plants render here dynamically -->
+        </div>
+
+        <!-- Empty state -->
+        <div class="empty-garden hidden" id="emptyGarden">
+          <div class="empty-illustration">
+            <svg viewBox="0 0 200 200" class="empty-svg">
+              <ellipse cx="100" cy="170" rx="80" ry="15" fill="#E8DFD0" opacity="0.5"/>
+              <rect x="75" y="120" width="50" height="45" rx="6" fill="#D4C4A8"/>
+              <rect x="80" y="115" width="40" height="10" rx="3" fill="#C4B498"/>
+              <path d="M100 115 Q95 90 85 80 Q95 85 100 70 Q105 85 115 80 Q105 90 100 115" fill="#B8D4A0" opacity="0.6"/>
+            </svg>
+          </div>
+          <h2 class="empty-title">Your garden awaits</h2>
+          <p class="empty-text">Plant your first seed — add someone you want to stay close to</p>
+          <button class="btn btn-primary" id="emptyAddBtn">
+            <span class="btn-icon">🌱</span> Plant first seed
+          </button>
+        </div>
+      </div>
+
+      <!-- Floating water reminder -->
+      <div class="water-reminder hidden" id="waterReminder">
+        <div class="reminder-pulse"></div>
+        <span class="reminder-count" id="reminderCount">0</span>
+        <span class="reminder-text">plants need water</span>
+      </div>
+    </section>
+
+    <!-- ===== PLANT DETAIL SCREEN ===== -->
+    <section class="screen" id="plantScreen">
+      <header class="detail-header">
+        <button class="back-btn" id="plantBackBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <h2 class="detail-title" id="plantName">Plant</h2>
+        <button class="icon-btn" id="plantEditBtn" aria-label="Edit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M17 3a2.83 2.83 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+          </svg>
+        </button>
+      </header>
+
+      <div class="plant-detail-body">
+        <div class="plant-showcase" id="plantShowcase">
+          <!-- Large plant SVG renders here -->
+        </div>
+
+        <div class="plant-health-ring">
+          <svg viewBox="0 0 120 120" class="health-ring-svg">
+            <circle cx="60" cy="60" r="52" class="health-ring-bg"/>
+            <circle cx="60" cy="60" r="52" class="health-ring-fill" id="healthRing"/>
+          </svg>
+          <div class="health-label" id="healthLabel">100%</div>
+        </div>
+
+        <div class="plant-info-card">
+          <div class="info-row">
+            <span class="info-icon">🌱</span>
+            <span class="info-label">Planted</span>
+            <span class="info-value" id="plantedDate">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-icon">💧</span>
+            <span class="info-label">Last watered</span>
+            <span class="info-value" id="lastWatered">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-icon">🔄</span>
+            <span class="info-label">Cadence</span>
+            <span class="info-value" id="plantCadence">—</span>
+          </div>
+          <div class="info-row">
+            <span class="info-icon">🏷</span>
+            <span class="info-label">Relationship</span>
+            <span class="info-value" id="plantRelation">—</span>
+          </div>
+        </div>
+
+        <button class="btn btn-water" id="waterBtn">
+          <span class="water-icon">💧</span>
+          <span>Water this plant</span>
+        </button>
+
+        <!-- Water history -->
+        <div class="water-history">
+          <h3 class="history-title">Recent waters</h3>
+          <div class="history-list" id="historyList">
+            <!-- History items render here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ADD SEED SCREEN ===== -->
+    <section class="screen" id="addScreen">
+      <header class="detail-header">
+        <button class="back-btn" id="addBackBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <h2 class="detail-title">Plant a seed</h2>
+        <div style="width:40px"></div>
+      </header>
+
+      <div class="add-body">
+        <div class="add-illustration">
+          <div class="seed-animation" id="seedPreview">
+            <!-- Seed preview SVG renders here -->
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Who is this plant for?</label>
+          <input type="text" class="form-input" id="personName" placeholder="Their name..." autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">What kind of relationship?</label>
+          <div class="chip-group" id="relationChips">
+            <button class="chip" data-value="family" data-plant="sunflower">
+              <span class="chip-icon">🌻</span> Family
+            </button>
+            <button class="chip" data-value="partner" data-plant="rose">
+              <span class="chip-icon">🌹</span> Partner
+            </button>
+            <button class="chip" data-value="friend" data-plant="fern">
+              <span class="chip-icon">🌿</span> Friend
+            </button>
+            <button class="chip" data-value="colleague" data-plant="cactus">
+              <span class="chip-icon">🌵</span> Colleague
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">How often do you want to reach out?</label>
+          <div class="cadence-picker" id="cadencePicker">
+            <button class="cadence-opt" data-days="1">Daily</button>
+            <button class="cadence-opt" data-days="3">Every 3 days</button>
+            <button class="cadence-opt selected" data-days="7">Weekly</button>
+            <button class="cadence-opt" data-days="14">Biweekly</button>
+            <button class="cadence-opt" data-days="30">Monthly</button>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-plant-seed" id="plantSeedBtn" disabled>
+          <span class="btn-icon">🌱</span> Plant this seed
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== WATER ACTION SHEET ===== -->
+    <div class="action-sheet hidden" id="waterSheet">
+      <div class="sheet-backdrop" id="sheetBackdrop"></div>
+      <div class="sheet-content">
+        <div class="sheet-handle"></div>
+        <h3 class="sheet-title">How did you reach out?</h3>
+        <p class="sheet-subtitle" id="sheetPersonName">to Someone</p>
+        <div class="water-options">
+          <button class="water-option" data-type="call">
+            <span class="wo-icon">📞</span>
+            <span class="wo-label">Called them</span>
+          </button>
+          <button class="water-option" data-type="text">
+            <span class="wo-icon">💬</span>
+            <span class="wo-label">Texted / messaged</span>
+          </button>
+          <button class="water-option" data-type="visit">
+            <span class="wo-icon">🤗</span>
+            <span class="wo-label">Met in person</span>
+          </button>
+          <button class="water-option" data-type="gift">
+            <span class="wo-icon">🎁</span>
+            <span class="wo-label">Sent something</span>
+          </button>
+          <button class="water-option" data-type="thought">
+            <span class="wo-icon">💭</span>
+            <span class="wo-label">Thought of them</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== WATER ANIMATION OVERLAY ===== -->
+    <div class="water-overlay hidden" id="waterOverlay">
+      <div class="water-drops" id="waterDrops"></div>
+    </div>
+
+    <!-- ===== BOTTOM NAV ===== -->
+    <nav class="bottom-nav" id="bottomNav">
+      <button class="nav-item active" data-screen="gardenScreen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        <span>Garden</span>
+      </button>
+      <button class="nav-item add-nav" id="addNavBtn" data-screen="addScreen">
+        <div class="add-circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+        </div>
+        <span>Seed</span>
+      </button>
+      <button class="nav-item" data-screen="historyScreen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span>History</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
