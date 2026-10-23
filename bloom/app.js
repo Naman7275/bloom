@@ -775,6 +775,82 @@ const App = (() => {
     }, 1800);
   }
 
+  // ===== ONBOARDING =====
+  let obSlide = 0;
+  const OB_TOTAL = 4;
+
+  function initOnboarding() {
+    const ob = document.getElementById('onboarding');
+    const slides = ob.querySelectorAll('.ob-slide');
+    const dots = ob.querySelectorAll('.ob-dot');
+    const nextBtn = document.getElementById('obNext');
+    const skipBtn = document.getElementById('obSkip');
+    let startX = 0;
+    let isDragging = false;
+
+    function goToSlide(n) {
+      slides.forEach((s, i) => {
+        s.classList.remove('active', 'exit-left');
+        if (i < n) s.classList.add('exit-left');
+        else if (i === n) s.classList.add('active');
+      });
+      dots.forEach((d, i) => d.classList.toggle('active', i === n));
+      nextBtn.textContent = n === OB_TOTAL - 1 ? 'Get Started' : 'Next';
+      obSlide = n;
+    }
+
+    function finishOnboarding() {
+      try { localStorage.setItem('bloom_onboarded', '1'); } catch {}
+      ob.style.transition = 'opacity 0.5s, transform 0.5s';
+      ob.style.opacity = '0';
+      ob.style.transform = 'scale(1.05)';
+      setTimeout(() => {
+        ob.classList.add('hidden');
+        ob.style.opacity = '';
+        ob.style.transform = '';
+        proceedAfterOnboarding();
+      }, 500);
+    }
+
+    nextBtn.addEventListener('click', () => {
+      haptic('light');
+      if (obSlide < OB_TOTAL - 1) goToSlide(obSlide + 1);
+      else finishOnboarding();
+    });
+
+    skipBtn.addEventListener('click', () => {
+      haptic('light');
+      finishOnboarding();
+    });
+
+    ob.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+    }, { passive: true });
+
+    ob.addEventListener('touchend', (e) => {
+      if (!isDragging) return;
+      isDragging = false;
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0 && obSlide < OB_TOTAL - 1) goToSlide(obSlide + 1);
+        else if (diff < 0 && obSlide > 0) goToSlide(obSlide - 1);
+      }
+    }, { passive: true });
+
+    goToSlide(0);
+  }
+
+  function proceedAfterOnboarding() {
+    if (useCloud) {
+      document.getElementById('loginScreen').classList.remove('hidden');
+    } else {
+      loadLocal();
+      document.getElementById('app').classList.remove('app-hidden');
+      renderGarden();
+    }
+  }
+
   // ===== INIT =====
   function init() {
     dismissSplash();
@@ -801,7 +877,16 @@ const App = (() => {
           dd.classList.add('hidden');
         }
       });
-    } else {
+    }
+
+    let onboarded = false;
+    try { onboarded = localStorage.getItem('bloom_onboarded') === '1'; } catch {}
+
+    if (!onboarded) {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('onboarding').classList.remove('hidden');
+      initOnboarding();
+    } else if (!useCloud) {
       loadLocal();
       document.getElementById('loginScreen').classList.add('hidden');
       document.getElementById('app').classList.remove('app-hidden');
