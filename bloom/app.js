@@ -988,6 +988,15 @@ const App = (() => {
 
   // ===== INIT =====
   function init() {
+    // ?reset clears onboarding + signs out so you can see the full flow again
+    if (new URLSearchParams(window.location.search).has('reset')) {
+      try { localStorage.removeItem('bloom_onboarded'); } catch {}
+      history.replaceState(null, '', window.location.pathname);
+      if (typeof firebase !== 'undefined') {
+        try { firebase.initializeApp(FIREBASE_CONFIG); firebase.auth().signOut(); } catch {}
+      }
+    }
+
     dismissSplash();
     updateSky();
     initParticles();
