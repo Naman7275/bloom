@@ -87,12 +87,22 @@ const App = (() => {
         currentUser = user;
         updateProfileUI(user);
         subscribeToPlants();
-        showApp();
+        let onboarded = false;
+        try { onboarded = localStorage.getItem('bloom_onboarded') === '1'; } catch {}
+        if (!onboarded) {
+          hideLanding();
+          document.getElementById('loginScreen').classList.add('hidden');
+          document.getElementById('onboarding').classList.remove('hidden');
+          document.getElementById('app').classList.add('app-hidden');
+          initOnboarding();
+        } else {
+          showApp();
+        }
       } else {
         currentUser = null;
         if (unsubscribePlants) { unsubscribePlants(); unsubscribePlants = null; }
         plants = [];
-        showLogin();
+        showLanding();
       }
     });
   }
@@ -152,12 +162,12 @@ const App = (() => {
   }
 
   function showLogin() {
-    if (!document.getElementById('onboarding').classList.contains('hidden')) return;
     showLanding();
   }
 
   function showApp() {
     hideLanding();
+    document.getElementById('onboarding').classList.add('hidden');
     document.getElementById('loginScreen').classList.add('hidden');
     document.getElementById('app').classList.remove('app-hidden');
     document.getElementById('skyGradient').style.display = '';
@@ -858,12 +868,11 @@ const App = (() => {
   }
 
   function proceedAfterOnboarding() {
-    if (useCloud) {
-      if (currentUser) {
-        showApp();
-      } else {
-        showLanding();
-      }
+    document.getElementById('onboarding').classList.add('hidden');
+    if (useCloud && currentUser) {
+      showApp();
+    } else if (useCloud) {
+      showLanding();
     } else {
       loadLocal();
       document.getElementById('app').classList.remove('app-hidden');
@@ -1030,14 +1039,7 @@ const App = (() => {
       });
     }
 
-    let onboarded = false;
-    try { onboarded = localStorage.getItem('bloom_onboarded') === '1'; } catch {}
-
-    if (!onboarded) {
-      document.getElementById('loginScreen').classList.add('hidden');
-      document.getElementById('onboarding').classList.remove('hidden');
-      initOnboarding();
-    } else if (!useCloud) {
+    if (!useCloud) {
       loadLocal();
       document.getElementById('loginScreen').classList.add('hidden');
       document.getElementById('app').classList.remove('app-hidden');
