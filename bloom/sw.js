@@ -1,4 +1,4 @@
-const CACHE = 'bloom-v3';
+const CACHE = 'bloom-v4';
 const ASSETS = ['./', './index.html', './style.css', './app.js', './manifest.json', './icon-192.svg', './icon-512.svg'];
 
 self.addEventListener('install', e => {
